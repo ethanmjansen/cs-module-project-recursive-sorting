@@ -38,72 +38,54 @@ def merge_sort(arr):
 
 
 # implement an in-place merge sort algorithm
-def merge_in_place(arr, start, mid, end):
-    # Your code here
-    n1 = mid - start + 1
-    n2 = end - mid
+def merge_in_place(arr, start, mid, end): 
+    start2 = mid + 1
   
-    # create temp arrays 
-    L = [0] * (n1) 
-    R = [0] * (n2) 
+    # If the direct merge is already sorted 
+    if (arr[mid] <= arr[start2]): 
+        return
+      
+    # Two pointers to maintain start 
+    # of both arrays to merge 
+    while (start <= mid and start2 <= end): 
   
-    # Copy data to temp arrays L[] and R[] 
-    for i in range(0 , n1): 
-        L[i] = arr[start + i] 
-  
-    for j in range(0 , n2): 
-        R[j] = arr[mid + 1 + j] 
-  
-    # Merge the temp arrays back into arr[l..r] 
-    i = 0     # Initial index of first subarray 
-    j = 0     # Initial index of second subarray 
-    k = start     # Initial index of merged subarray 
-  
-    while i < n1 and j < n2 : 
-        if L[i] <= R[j]: 
-            arr[k] = L[i] 
-            i += 1
+        # If element 1 is in right place 
+        if (arr[start] <= arr[start2]): 
+            start += 1
         else: 
-            arr[k] = R[j] 
-            j += 1
-        k += 1
+            value = arr[start2]
+            index = start2
   
-    # Copy the remaining elements of L[], if there 
-    # are any 
-    while i < n1: 
-        arr[k] = L[i] 
-        i += 1
-        k += 1
+            # Shift all the elements between element 1 
+            # element 2, right by 1. 
+            while (index != start): 
+                arr[index] = arr[index - 1]
+                index -= 1
+              
+            arr[start] = value
   
-    # Copy the remaining elements of R[], if there 
-    # are any 
-    while j < n2: 
-        arr[k] = R[j] 
-        j += 1
-        k += 1
-
-    return arr
-
-
-def merge_sort_in_place(arr, l, r):
-    # Your code here
-    if l < r: 
+            # Update all the pointers 
+            start += 1
+            mid += 1
+            start2 += 1
+          
+def merge_sort_in_place(arr, l, r): 
+    if (l < r): 
   
-        # Same as (l+r)//2, but avoids overflow for 
-        # large l and h 
-        m = (l+(r-1))//2
+        # Same as (l + r) / 2, but avoids overflow 
+        # for large l and r 
+        m = l + (r - l) // 2
   
         # Sort first and second halves 
-        merge_sort_in_place(arr, l, m) 
-        merge_sort_in_place(arr, m + 1, r) 
-        merge_in_place(arr, l, m, r) 
-
-    return arr
+        merge_sort_in_place(arr, l, m)
+        merge_sort_in_place(arr, m + 1, r)
+  
+        merge_in_place(arr, l, m, r)
 
 
 # STRETCH: implement the Timsort function below
 # hint: check out https://github.com/python/cpython/blob/master/Objects/listsort.txt
-def timsort(arr):
+'''def timsort(arr):
     # Your code here
 
-    return arr
+    return arr'''
